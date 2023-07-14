@@ -11,11 +11,9 @@ let initialPlayers = [
 ];
 
 
-
-
 const MatchSimulation = () => {
 
-
+  // Initaillizing state
   const [score, setScore] = useState(124);
   const [wickets, setWickets] = useState(7);
   const [overs, setOvers] = useState(16);
@@ -30,6 +28,7 @@ const MatchSimulation = () => {
   const [striker, nonStriker] = availablePlayers;
   const currentStriker = isOut ? nonStriker : striker;
 
+  // result of the match
   const matchResult = () => {
     if (score >= 174) {
       return 'Bengaluru won the match!';
@@ -38,11 +37,9 @@ const MatchSimulation = () => {
     }
   };
 
+  // Bowl functionality
   const handleBowl = () => {
-    if (score >= 174 || overs >= 20 || wickets >= 10) {
-      return;
-    }
-
+    // generating random numbers 
     const random = Math.random();
     const { probability } = currentStriker;
 
@@ -59,11 +56,12 @@ const MatchSimulation = () => {
       outcome = '4';
     } else if (random <= probability['dotball'] + probability['1'] + probability['2'] + probability['3'] + probability['4'] + probability['5']) {
       outcome = '5';
-    }  
+    }
     else {
       outcome = 'out';
     }
 
+    // checking all possible conditions
     if (outcome !== 'dotball' && outcome !== 'out') {
       const run = parseInt(outcome, 10);
       setScore(prevScore => prevScore + run);
@@ -95,14 +93,16 @@ const MatchSimulation = () => {
       setIsOut(false);
       setCurrentStrikerScore(0);
       setNonStrikerScore(0);
+
     }
 
-    setOvers(prevOvers => prevOvers + 0.1);
+    // overs update
+    setOvers(prevOvers => prevOvers + 0.1);  
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.heading}>Match Simulation</Text>
+      <Text style={styles.heading}>Match Simulation App</Text>
       <Text style={styles.label}>CSK VS RCB</Text>
       <Text>CSK won the toss and choose to bat first</Text>
       <View style={styles.secondCont}>
@@ -119,9 +119,9 @@ const MatchSimulation = () => {
         </View>
         <View style={styles.strikerCont}>
           <Text style={styles.strikerLabel}>
-          {currentStriker.name} ({currentStrikerScore}){strikerIndex === 0 && !isOut ? '*' : ''}          </Text>
+            {currentStriker.name} ({currentStrikerScore}){strikerIndex === 0 && !isOut ? '*' : ''}          </Text>
           <Text style={styles.strikerLabel}>
-          {nonStriker ? `${nonStriker.name}(${nonStrikerScore}) ${strikerIndex === 1 && !isOut ? '*' : ''}` : ''}
+            {nonStriker ? `${nonStriker.name}(${nonStrikerScore}) ${strikerIndex === 1 && !isOut ? '*' : ''}` : ''}
           </Text>
         </View>
         <TouchableOpacity
@@ -148,6 +148,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#000',
   },
+
   heading: {
     fontSize: 24,
     fontWeight: 'bold',
@@ -155,21 +156,25 @@ const styles = StyleSheet.create({
     marginTop: 10,
     color: '#fff',
   },
+
   label: {
     fontSize: windowWidth * 0.1,
     color: '#fff',
   },
+
   outPlayersLabel: {
     fontSize: 16,
     marginTop: 10,
     color: '#fff',
   },
+
   resultLabel: {
     fontSize: 20,
     fontWeight: 'bold',
     marginTop: 20,
     color: '#fff',
   },
+
   logoCont: {
     flexDirection: 'row',
     marginTop: windowHeight * -0.12,
@@ -180,6 +185,7 @@ const styles = StyleSheet.create({
     height: windowHeight * 0.15,
     borderRadius: 25,
   },
+
   logo: {
     width: 100,
     height: 100,
@@ -188,6 +194,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center'
 
   },
+
   logoLabel: {
     color: '#fff',
     fontSize: windowWidth * 0.09,
